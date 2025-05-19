@@ -1,0 +1,13 @@
+# LaTeX
+*.aux 
+*.bcf
+*.fdb_latexmk 
+*.fls
+*.log
+*.run.xml 
+*.synctex.gz
+report/rho-bib
+report/rho-class
+
+# venv
+/venv

@@ -1,0 +1,90 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{enumitem}                       % custom enum labels
+\usepackage{parskip}          
+\usepackage{geometry} 
+\geometry{
+  paperwidth=18cm,
+  left=8mm,
+  right=8mm,
+  top=8mm,
+  bottom=8mm,
+}
+\title{Topological Qubit Simulations in t-junction Kitaev Networks}
+\author{Hrishikesh Belagali}
+\date{\today}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pfn}[1]{\textrm{#1}}  % enables new functions
+\newcommand{\mbf}[1]{\mathbf{#1}}  % mathbf
+\newcommand{\C}{\mathbb{C}}        % fancy C
+\newcommand{\R}{\mathbb{R}}        % fancy R
+\newcommand{\Q}{\mathbb{Q}}        % fancy Q
+\newcommand{\Z}{\mathbb{Z}}        % fancy Z
+\newcommand{\N}{\mathbb{N}}   
+\newcommand{\K}{\mathbb{K}}  % fancy N
+\newcommand{\V}{\mathbf{V}} %vector space 
+\newcommand{\0}{\mathbf{0}} %zero vector 
+\newcommand{\from}{\leftarrow}
+\renewcommand{\i}[1]{\textit{#1}}
+\renewcommand{\b}[1]{\textbf{#1}}
+\newcommand{\qed}{$\square$}
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+In this work, I aim to simulate a topological qubit through the quantum braiding of 3 Kitaev chains, using Python and NumPy.
+The goal of doing so is to gain some knowledge on the nuances of topological quantum computing, and a better understanding of non-Abelian statistics.
+\section{Formalism}
+\subsection{The Physical Model}
+\subsubsection{Kitaev Chains}
+A Kitaev chain is a 1-dimensional topological superconductor, which can host Majorana Zero Modes (hereafter abbreviated as MZMs). In terms of normal fermionic operators, the Kitaev chain Hamiltonian is given by
+$$\hat H = -\mu \sum_{j=1}^N c_j^{\dagger}c_j - t\sum_{j=1}^{N-1} \pqty{c_j^{\dagger}c_{j+1} + c_{j+1}^\dagger c_j} + \Delta \sum_{j=1}^{N-1} \pqty{c_jc_{j+1} + c^{\dagger}_{j+1} c_j^{\dagger}}$$ 
+where - 
+\begin{itemize}
+    \item $\mu$: chemical potential 
+    \item $t$: hopping amplitude
+    \item $\Delta$: p-wave superconducting pairing
+    \item $c_j, c_j^{\dagger}$ fermionic creation/annihilation operators
+\end{itemize}
+Majorana modes appear at the ends of the chain in the topological phase when $\abs{\mu} < 2t$.
+We can express the Hamiltonian in the more convenient Majorana operator form. These operators are defined as
+$$\gamma_{A, j} = c_j + c_j^{\dagger}$$
+$$\gamma_{B, j} = -i(c_j - c_j^{\dagger})$$ 
+The convenient Hamiltonian becomes
+$$\hat H = -\frac{\mu}{2}\sum_{j=1}^N \pqty{1 + i \gamma_{A, j}\gamma_{B, j}} + \frac{i}{2}\sum_{j=1}^{N-1} (t - \Delta) \gamma_{B, j}\gamma_{A, j+1} + \frac{i}{2}\sum_{j=1}^{N-1}(t + \Delta)\gamma_{A, j}\gamma_{B, j+1}$$
+\textbf{Milestone: Successfully simulate a Kitaev chain and identify MZMs (ideally through visual and mathematical representation)}
+\subsubsection{t-Junction Kitaev Network}
+The t-junction Kitaev network is the minimal geometry required to host MZMs. They will be simulated as tight-binding lattices, and the full network will be modeled as a graph of Kitaev chains, where coupling terms connect the adjacent sites and 
+time-dependent parameters are used to control MZM motion. This will be essential for the braiding process.
+
+\textbf{Milestone: Identify time-dependent MZM movement and visually represent the Kitaev network as a graph.}
+\subsection{Simulation Technique - BdG Formalism}
+\subsubsection{The Wavefunction}
+The Bogoliubov-de Gennes (BdG) formalism will be used to simulate the full quantum state evolution. 
+$$i\dv{t} \Psi(t) = \hat H(t) \Psi(t)$$ 
+where $\Psi(t)$ is the BdG quasiparticle wavefunction. 
+The braiding (which is inherently adiabatic) will be simulated by evolving the Hamiltonian parameters slowly in time. 
+\subsubsection{Adiabatic Quantum Braiding}
+\begin{itemize}
+    \item Create a terminal MZM in each arm. 
+    \item Tune parameters to move one MZM through the junction into the other arm.
+    \item Continue moving until the MZM has encircled another MZM, this is a braid. 
+    \item Ensure the evolution is adiabatic to stay in the ground-state.
+\end{itemize}
+Track the braiding by projecting the final state back onto the degenerate ground-state basis and compute the overlap to find the unitary braid transformation. Project the Hamiltonian into the Majorana basis, and find the zero-energy eigenstates. 
+Plot their spatial localization to see where the MZMs are during the simulation.
+\subsection{Topological Protection}
+Simulate the following errors - 
+\begin{itemize}
+    \item Local Perturbations 
+    \item Pauli Errors
+\end{itemize}
+Measure fidelity of the error-states, entanglement entropy, parity conservation and other metrics. Ideally, you will show that only Majorana pair fusion can actually destroy information.
+\end{document}
