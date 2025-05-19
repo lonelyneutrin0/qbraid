@@ -1,2 +1,2 @@
 # qbraid
-Simulating Quantum Braiding in Topological Insulators
+Simulating Quantum Braiding in Topological Superconductors
